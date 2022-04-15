@@ -3,8 +3,10 @@ package controllers
 import "testing"
 
 func TestHello(t *testing.T) {
-	if Hello("World") != "Hello World" {
-		t.Error("Method not returns appropriate value for input: {}. Expected {}; received: {}", "World", "Hello World")
+	if output := Hello("World"); output != "Hello World" {
+		t.Errorf("TestHello FAILED: Expected %q, received: %q", "Hello World", output)
+	} else {
+		t.Logf("TestHello PASSED: Expected %q, received: %q", "Hello World", output)
 	}
 }
 
@@ -13,7 +15,6 @@ func TestTableHello(t *testing.T) {
 		input    string
 		expected string
 	}{
-
 		{"World", "Hello World"},
 		{"Paul", "Hello Paul"},
 		{"Cindy", "Hello Cindy"},
@@ -22,7 +23,9 @@ func TestTableHello(t *testing.T) {
 
 	for _, test := range tests {
 		if output := Hello(test.input); output != test.expected {
-			t.Error("Method not returns appropriate value for input: {}. Expected {}; received: {}", test.input, test.expected, output)
+			t.Errorf("TestTableHello FAILED: input: %q, expected %q, received: %q", test.input, test.expected, output)
+		} else {
+			t.Logf("TestTableHello PASSED: input: %q, expected %q, received: %q", test.input, test.expected, output)
 		}
 	}
 }
