@@ -1,6 +1,11 @@
 package main
 
+import (
+	"fmt"
+)
+
 func main() {
-	//	fmt.Println("vim-go")
-	panic("TDD go")
+	//Connect()
+	//PrintData()
+	fmt.Println("vim-go")
 }

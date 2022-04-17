@@ -1,6 +1,9 @@
 package controllers
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func TestHello(t *testing.T) {
 	if output := Hello("World"); output != "Hello World" {
@@ -26,6 +29,18 @@ func TestTableHello(t *testing.T) {
 			t.Errorf("TestTableHello FAILED: input: %q, expected %q, received: %q", test.input, test.expected, output)
 		} else {
 			t.Logf("TestTableHello PASSED: input: %q, expected %q, received: %q", test.input, test.expected, output)
+		}
+	}
+}
+
+func TestGetData(t *testing.T) {
+
+	if rs, err := GetData(); err != nil {
+		t.Errorf("FAILED: %s", err)
+	} else {
+		t.Logf("SUCCESS")
+		for _, row := range rs {
+			fmt.Printf("Row: %s\n", row)
 		}
 	}
 }
