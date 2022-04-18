@@ -4,6 +4,9 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"log"
+	"net/http"
 
 	_ "github.com/lib/pq"
 )
@@ -55,9 +58,33 @@ func GetData() ([]string, error) {
 	// get any error encountered during iteration
 	err = rows.Err()
 	if err != nil {
-		errors.New("Error happened during iteration")
+		return errors.New("Error happened during iteration")
 	}
 
 	return resultSet, nil
 
+}
+
+func GetInfoProject(projectName string) error {
+
+	url := fmt.Sprintf("https://api.github.com/users/%s/repos", projectName)
+	res, err := http.Get(url)
+
+	if err != nil {
+		return err
+	}
+
+	body, err := ioutil.ReadAll(res.Body)
+	res.Body.Close()
+	if err != nil {
+		return err
+	}
+	if res.StatusCode != 200 {
+		msg := fmt.Sprintf("Not successful status: ", res.StatusCode)
+		return errors.New(msg)
+	}
+
+	log.Printf("Body: %s\n", body)
+
+	return nil
 }

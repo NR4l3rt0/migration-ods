@@ -2,6 +2,23 @@ package models
 
 import "time"
 
+type Migrator interface {
+	MigrateJenkinsToVersion(v string) error
+	MigrateMetadataToVersion(v string) error
+}
+
+type Context struct {
+	ProjectKey string
+	BaseURL    string
+	User       string
+	Token      string
+}
+
+type Project struct {
+	Components []ResultSet
+	Context
+}
+
 type ResultSet struct {
 	ProjectKey          string     `json:"project_key"`
 	RepositoryName      string     `json:"repository_name"`
