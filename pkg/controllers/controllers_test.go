@@ -44,3 +44,26 @@ func TestGetData(t *testing.T) {
 		}
 	}
 }
+
+func TestTableGetInfoProject(t *testing.T) {
+
+	tests := []struct {
+		input    string
+		expected string
+	}{
+		{"NR4l3rt0", "SUCCESS"},
+		{"", "FAILED"},
+		{"NR4l3rt", "FAILED"},
+	}
+
+	for _, test := range tests {
+
+		if output := GetInfoProject(test.input); output != nil && test.expected == "SUCCESS" {
+			t.Errorf("TestTableGetInfoProject FAILED; input: %q, expected %q, received: %q", test.input, test.expected, output)
+		} else {
+			t.Logf("TestTableGetInfoProject PASSED; input: %q, expected %q, received: %q", test.input, test.expected, output)
+		}
+
+	}
+
+}

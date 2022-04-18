@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	_ "github.com/lib/pq"
@@ -58,7 +57,7 @@ func GetData() ([]string, error) {
 	// get any error encountered during iteration
 	err = rows.Err()
 	if err != nil {
-		return errors.New("Error happened during iteration")
+		return make([]string, 1), errors.New("Error happened during iteration")
 	}
 
 	return resultSet, nil
@@ -74,17 +73,18 @@ func GetInfoProject(projectName string) error {
 		return err
 	}
 
-	body, err := ioutil.ReadAll(res.Body)
+	//body, err := ioutil.ReadAll(res.Body)
+	_, err = ioutil.ReadAll(res.Body)
 	res.Body.Close()
 	if err != nil {
 		return err
 	}
 	if res.StatusCode != 200 {
-		msg := fmt.Sprintf("Not successful status: ", res.StatusCode)
+		msg := fmt.Sprintf("Not successful status: %d", res.StatusCode)
 		return errors.New(msg)
 	}
 
-	log.Printf("Body: %s\n", body)
+	//fmt.Printf("Body: %s\n", body)
 
 	return nil
 }
